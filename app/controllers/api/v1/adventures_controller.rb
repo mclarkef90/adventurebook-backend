@@ -37,7 +37,10 @@ class Api::V1::AdventuresController < ApplicationController
 
   def show
     if @adventure
-      render json: @adventure, status: :accepted
+      options = {
+        include: [:user, :users, :reviews]
+      }
+      render json: AdventureSerializer.new(@adventure, options)
     else
       render json: {errors: @adventure.errors.full_messages}, status: :unprocessible_entity
     end
