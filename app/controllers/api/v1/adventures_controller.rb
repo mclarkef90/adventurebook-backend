@@ -2,6 +2,11 @@ class Api::V1::AdventuresController < ApplicationController
 
   def index
     adventures= Adventure.all
+    options = {
+    include: [:users, :reviews]
+  }
+    render json: AdventureSerializer.new(adventures, options)
+
   end
 
   private

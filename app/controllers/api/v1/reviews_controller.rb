@@ -1,7 +1,12 @@
-class API::V1::ReviewsController < ApplicationController
+class Api::V1::ReviewsController < ApplicationController
 
   def index
     reviews= Review.all
+    options = {
+    include: [:user, :adventure]
+  }
+    render json: ReviewSerializer.new(reviews, options)
+
   end
 
   private
