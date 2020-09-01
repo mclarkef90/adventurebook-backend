@@ -1,18 +1,56 @@
 class Api::V1::AdventuresController < ApplicationController
+  before_action :set_user, only: [:update, :destroy, :show]
 
   def index
     adventures= Adventure.all
     options = {
-    include: [:users, :reviews]
-  }
+      include: [:users, :reviews]
+    }
     render json: AdventureSerializer.new(adventures, options)
+  end
 
+  def create
+    adventure= Adventure.new(adventure_params)
+    if adventure.save
+      render json: adventure, status: :accepted
+    else
+      render json: {errors: adventure.errors.full_messages}, status: :unprocessible_entity
+    end
+  end
+
+  def update
+    @adventure.update(adventure_params)
+    if @adventure.save
+      render json: @adventure, status: :accepted
+    else
+      render json: {errors: @adventure.errors.full_messages}, status: :unprocessible_entity
+    end
+  end
+
+  def destroy
+    if @adventure
+      @adventure.delete
+    else
+      render json: {errors: @adventure.errors.full_messages}, status: :unprocessible_entity
+    end
+  end
+
+  def show
+    if @adventure
+      render json: @adventure, status: :accepted
+    else
+      render json: {errors: @adventure.errors.full_messages}, status: :unprocessible_entity
+    end
   end
 
   private
 
   def adventure_params
     params.require(:adventure).permit(:title, :description, :image_url, :user_id)
+  end
+
+  def set_user
+    @adventure= Adventure.find_by(id: params[:id])
   end
 
 end
