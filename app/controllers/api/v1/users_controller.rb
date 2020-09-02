@@ -1,6 +1,22 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy, :show]
 
+  def login
+    user= User.find_by(email: params[:email])
+    if user
+      render json: user, status: :accepted
+    else
+      render json: {errors: "Incorrect Login"}, status: :unprocessible_entity
+    end
+  end
+
+  def topUser
+    mostReviewed= Review.top_user
+    adventure= mostReviewed.adventure
+    user= adventure.user
+    render json: user
+  end
+
   def index
     users= User.all
     options = {

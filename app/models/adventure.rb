@@ -3,4 +3,8 @@ class Adventure < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :users, through: :reviews
   validates :title, :description, :image_url, presence: true
+
+  def self.top_adventure
+    all.order(likes: :desc).limit(1)
+  end  
 end

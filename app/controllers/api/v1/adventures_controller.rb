@@ -1,6 +1,11 @@
 class Api::V1::AdventuresController < ApplicationController
   before_action :set_user, only: [:update, :destroy, :show]
 
+  def topAdventure
+    adventure= Adventure.top_adventure
+    render json: adventure
+  end
+
   def index
     adventures= Adventure.all
     options = {

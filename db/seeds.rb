@@ -37,7 +37,8 @@ adventures= Adventure.create([
   user_id: 1,
   title: "Boat to Mt.Vernon",
   description: "Mount Vernon is an American landmark and former plantation of George Washington, the first President of the United States, and his wife, Martha Washington. The estate is on the banks of the Potomac River in Fairfax County, Virginia, near Alexandria, across from Prince George's County, Maryland",
-  image_url: "https://upload.wikimedia.org/wikipedia/commons/5/50/WestFrontMansionMountVernon.jpg"
+  image_url: "https://upload.wikimedia.org/wikipedia/commons/5/50/WestFrontMansionMountVernon.jpg",
+  likes: 5
   },
   {
   user_id: 3,
@@ -49,19 +50,28 @@ adventures= Adventure.create([
 
 reviews= Review.create([
   {
-  comment: "Super wonderful!",
+  comment: "Dying to go back, drinks were expensive",
   user_id: 3,
-  adventure_id: 1
+  adventure_id: 1,
+  completed: true,
+  liked: true
   },
   {
-  comment: "Got Seasick",
+  comment: "Great Plants!",
   user_id: 2,
   adventure_id: 3
   },
   {
-  comment: "Dying to go back, drinks were expensive",
+  comment: "Got Seasick",
   user_id: 1,
   adventure_id: 2,
+  completed: true,
+  liked: true
+  },
+  {
+  comment: "Beautiful views of Georgetown",
+  user_id: 1,
+  adventure_id: 1,
   completed: true,
   liked: true
   }
