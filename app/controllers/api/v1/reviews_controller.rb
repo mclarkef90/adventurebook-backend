@@ -13,14 +13,16 @@ class Api::V1::ReviewsController < ApplicationController
 
   def index
     reviews= Review.all
-
     render json: ReviewSerializer.new(reviews)
   end
 
   def create
     review= Review.new(review_params)
-    if adventure.save
-      render json: review, status: :accepted
+    if review.save
+      adventure= Adventure.find_by(id: params[:adventure_id])
+      adventure.increaseLikes(review)
+      adventure.increaseCompletions(review)
+      render json: {review: ReviewSerializer.new(review), adventure: AdventureSerializer.new(adventure)}, status: :accepted
     else
       render json: {errors: review.errors.full_messages}, status: :unprocessible_entity
     end
@@ -29,7 +31,10 @@ class Api::V1::ReviewsController < ApplicationController
   def update
     @review.update(review_params)
     if @review.save
-      render json: @review, status: :accepted
+      adventure= Adventure.find_by(id: params[:adventure_id])
+      adventure.increaseLikes(review)
+      adventure.increaseCompletions(review)
+      render json: ReviewSerializer.new(@review), status: :accepted
     else
       render json: {errors: @review.errors.full_messages}, status: :unprocessible_entity
     end
@@ -38,6 +43,7 @@ class Api::V1::ReviewsController < ApplicationController
   def destroy
     if @review
       @review.delete
+      render json: review
     else
       render json: {errors: @review.errors.full_messages}, status: :unprocessible_entity
     end

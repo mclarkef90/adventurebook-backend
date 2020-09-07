@@ -6,5 +6,20 @@ class Adventure < ApplicationRecord
 
   def self.top_adventure
     all.order(likes: :desc).limit(1)
-  end  
+  end
+
+  def increaseLikes(review)
+    if review.liked == true
+      self.likes += 1
+      self.save
+    end
+  end
+
+  def increaseCompletions(review)
+    if review.completed == true
+      self.completions +=1
+      self.save
+    end
+  end
+
 end
