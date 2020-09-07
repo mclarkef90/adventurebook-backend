@@ -43,6 +43,7 @@ class Api::V1::UsersController < ApplicationController
   def destroy
     if @user
       @user.delete
+      render json: user
     else
       render json: {errors: @user.errors.full_messages}, status: :unprocessible_entity
     end

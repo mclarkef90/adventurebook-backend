@@ -14,7 +14,7 @@ class Api::V1::AdventuresController < ApplicationController
   def create
     adventure= Adventure.new(adventure_params)
     if adventure.save
-      render json: adventure, status: :accepted
+      render json: AdventureSerializer.new(adventure)
     else
       render json: {errors: adventure.errors.full_messages}, status: :unprocessible_entity
     end
@@ -32,6 +32,7 @@ class Api::V1::AdventuresController < ApplicationController
   def destroy
     if @adventure
       @adventure.delete
+      render json: adventure
     else
       render json: {errors: @adventure.errors.full_messages}, status: :unprocessible_entity
     end
