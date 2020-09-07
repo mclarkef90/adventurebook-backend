@@ -22,4 +22,19 @@ class Adventure < ApplicationRecord
     end
   end
 
+  def decreaseLikes(review)
+    if review.liked == true
+      self.likes -= 1
+      self.save
+    end
+  end
+
+  def decreaseCompletions(review)
+    if review.completed == true
+      self.completions -= 1
+      self.save
+    end
+  end
+
+
 end

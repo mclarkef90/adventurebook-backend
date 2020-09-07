@@ -31,10 +31,7 @@ class Api::V1::ReviewsController < ApplicationController
   def update
     @review.update(review_params)
     if @review.save
-      adventure= Adventure.find_by(id: params[:adventure_id])
-      adventure.increaseLikes(review)
-      adventure.increaseCompletions(review)
-      render json: ReviewSerializer.new(@review), status: :accepted
+        render json: ReviewSerializer.new(@review), status: :accepted
     else
       render json: {errors: @review.errors.full_messages}, status: :unprocessible_entity
     end
@@ -43,7 +40,11 @@ class Api::V1::ReviewsController < ApplicationController
   def destroy
     if @review
       @review.delete
-      render json: review
+      adventureId= @review.adventure_id
+      adventure= Adventure.find_by(id: adventureId)
+      adventure.decreaseLikes(@review)
+      adventure.decreaseCompletions(@review)
+      render json: @review
     else
       render json: {errors: @review.errors.full_messages}, status: :unprocessible_entity
     end
