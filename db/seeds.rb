@@ -44,7 +44,7 @@ adventures= Adventure.create([
   user_id: 3,
   title: "Dumbarton Oaks",
   description: "The Garden, designed by renowned landscape gardener Beatrix Farrand, is an oasis within the city. Explore sixteen acres of terraced gardens and vistas, orchards and kitchen gardens, and a vast wilderness of meadows and wooded pathways. The Museum is home to a world-class collection of Byzantine and Pre-Columbian art, housed in magnificent galleries.",
-  image_url: "https://www.doaks.org/research/library-archives/dumbarton-oaks-archives/historical-records/75th-anniversary/blog/dumbarton-oaks-the-backstory/@@images/4f9ace48-338a-4d56-a3d8-039f0be224e2.jpeg"
+  image_url: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Fountainterrace2b.jpg"
   },
   ])
 

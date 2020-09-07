@@ -1,12 +1,20 @@
 class Api::V1::ReviewsController < ApplicationController
   before_action :set_review, only: [:update, :destroy, :show]
 
+  def tops
+    mostReviewed= Review.top_user
+    adventure= mostReviewed.adventure
+    user= adventure.user
+
+    topadventure= Adventure.top_adventure
+    render json: [topadventure, user]
+
+  end
+
   def index
     reviews= Review.all
-    options = {
-      include: [:user, :adventure]
-    }
-    render json: ReviewSerializer.new(reviews, options)
+
+    render json: ReviewSerializer.new(reviews)
   end
 
   def create

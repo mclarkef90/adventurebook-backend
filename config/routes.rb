@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       post '/login', to: 'users#login'
       get '/top_user', to: 'users#topUser'
       get '/top_adventure', to: 'adventures#topAdventure'
+      get '/todays_best', to: 'reviews#tops'
 
     end
   end

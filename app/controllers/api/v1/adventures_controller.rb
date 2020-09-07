@@ -8,10 +8,7 @@ class Api::V1::AdventuresController < ApplicationController
 
   def index
     adventures= Adventure.all
-    options = {
-      include: [:users, :reviews]
-    }
-    render json: AdventureSerializer.new(adventures, options)
+    render json: AdventureSerializer.new(adventures)
   end
 
   def create
@@ -26,7 +23,7 @@ class Api::V1::AdventuresController < ApplicationController
   def update
     @adventure.update(adventure_params)
     if @adventure.save
-      render json: @adventure, status: :accepted
+      render json: AdventureSerializer.new(@adventure)
     else
       render json: {errors: @adventure.errors.full_messages}, status: :unprocessible_entity
     end
@@ -54,7 +51,7 @@ class Api::V1::AdventuresController < ApplicationController
   private
 
   def adventure_params
-    params.require(:adventure).permit(:title, :description, :image_url, :user_id)
+    params.require(:adventure).permit(:title, :description, :image_url, :user_id, :likes, :completions)
   end
 
   def set_user
