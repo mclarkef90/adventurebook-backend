@@ -36,5 +36,4 @@ class Adventure < ApplicationRecord
     end
   end
 
-
 end

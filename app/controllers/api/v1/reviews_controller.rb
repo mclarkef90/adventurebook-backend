@@ -29,9 +29,19 @@ class Api::V1::ReviewsController < ApplicationController
   end
 
   def update
+    id= @review.id
+    @preUpdate = Review.find_by(id: id)
+    adventureId= @review.adventure_id
+    adventure= Adventure.find_by(id: adventureId)
+    adventure.decreaseLikes(@preUpdate)
+    adventure.decreaseCompletions(@preUpdate)
+
     @review.update(review_params)
+    adventure.increaseLikes(@review)
+    adventure.increaseCompletions(@review)
+
     if @review.save
-        render json: ReviewSerializer.new(@review), status: :accepted
+        render json: {review: ReviewSerializer.new(@review), adventure: AdventureSerializer.new(adventure)}, status: :accepted
     else
       render json: {errors: @review.errors.full_messages}, status: :unprocessible_entity
     end
@@ -44,7 +54,9 @@ class Api::V1::ReviewsController < ApplicationController
       adventure= Adventure.find_by(id: adventureId)
       adventure.decreaseLikes(@review)
       adventure.decreaseCompletions(@review)
-      render json: @review
+      userId= @review.user_id
+      user= User.find_by(id: userId)
+      render json: {review: ReviewSerializer.new(@review), adventure: AdventureSerializer.new(adventure), user: UserSerializer.new(user)}, status: :accepted
     else
       render json: {errors: @review.errors.full_messages}, status: :unprocessible_entity
     end
